@@ -39,7 +39,7 @@ public class AuthorProfileService {
         try {
             return repo.findByIdUser(idUser);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(ErrorMessages.NONEXISTENT_ID_USER.getDesc() + e.getMessage());
+            throw new IllegalArgumentException(ErrorMessages.NON_EXISTENT_ID_USER.getDesc() + e.getMessage());
         }
     }
 

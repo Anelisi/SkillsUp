@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static br.com.southsystem.skiils_up.enums.ErrorMessages.NON_EXIST_ID_COURSE;
+import static br.com.southsystem.skiils_up.enums.ErrorMessages.VALIDATION_COURSE;
+
 @NoArgsConstructor
 @Service
 public class CourseService {
@@ -22,13 +25,8 @@ public class CourseService {
     }
 
     public Course findById(Long id) {
-        return this.repo.findById(id).orElseThrow(() -> new IllegalArgumentException("Id do Curso inexistente!"));
+        return this.repo.findById(id).orElseThrow(() -> new IllegalArgumentException(NON_EXIST_ID_COURSE.getDesc()));
     }
-        /*Optional<Course> obj = repo.findById(id);
-
-        return obj.orElseThrow(() ->
-                new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Course.class.getName()));
-    }*/
 
     public Course create(Course course) {
         course.setId(null);
@@ -45,7 +43,7 @@ public class CourseService {
         try {
             repo.deleteById(id);
         }catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possível excluir um curso que possua avaliações ou que esteja inserido em algum pedido ou salvo como favorito");
+            throw new DataIntegrityException(VALIDATION_COURSE.getDesc());
         }
     }
 }

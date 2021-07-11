@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static br.com.southsystem.skiils_up.enums.ErrorMessages.IMPOSSIBLE_DELETE;
+
 @AllArgsConstructor
 @Service
 public class OrderService {
@@ -58,7 +60,7 @@ public class OrderService {
         try {
             repo.deleteById(id);
         }catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possível excluir um pedido que esteja vinculado a algum curso");
+            throw new DataIntegrityException(IMPOSSIBLE_DELETE.getDesc());
         }
     }
 

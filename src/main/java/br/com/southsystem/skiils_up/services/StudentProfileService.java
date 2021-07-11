@@ -1,7 +1,6 @@
 package br.com.southsystem.skiils_up.services;
 
 import br.com.southsystem.skiils_up.dto.StudentProfileDTO;
-import br.com.southsystem.skiils_up.enums.ErrorMessages;
 import br.com.southsystem.skiils_up.models.StudentProfile;
 import br.com.southsystem.skiils_up.repositories.StudentProfileRepository;
 import br.com.southsystem.skiils_up.services.exceptions.DataIntegrityException;
@@ -12,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static br.com.southsystem.skiils_up.enums.ErrorMessages.*;
 
 @AllArgsConstructor
 @Service
@@ -31,14 +32,14 @@ public class StudentProfileService {
 
     public StudentProfile findById(Long id) {
         return this.repo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.STUDENT_PROFILE_NOT_FOUND.getDesc()));
+                .orElseThrow(() -> new IllegalArgumentException(STUDENT_PROFILE_NOT_FOUND.getDesc()));
     }
 
     public StudentProfile findByIdUser(Long idUser) {
         try {
             return repo.findByIdUser(idUser);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(ErrorMessages.NONEXISTENT_ID_USER.getDesc() + e.getMessage());
+            throw new IllegalArgumentException(NON_EXISTENT_ID_USER.getDesc() + e.getMessage());
         }
     }
 
@@ -46,7 +47,7 @@ public class StudentProfileService {
         try {
             return repo.findByEnable(enable);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(ErrorMessages.NON_EXIST_ENABLE_STATUS.getDesc() + e.getMessage());
+            throw new IllegalArgumentException(NON_EXIST_ENABLE_STATUS.getDesc() + e.getMessage());
         }
     }
 
@@ -56,7 +57,7 @@ public class StudentProfileService {
             student.getSavedItems().add(idCourse);
             repo.save(student);
         }catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(ErrorMessages.STUDENT_PROFILE_NOT_FOUND.getDesc());
+            throw new IllegalArgumentException(STUDENT_PROFILE_NOT_FOUND.getDesc());
         }
     }
 
@@ -66,7 +67,7 @@ public class StudentProfileService {
             student.getOrdersList().add(idOrder);
             repo.save(student);
         }catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(ErrorMessages.STUDENT_PROFILE_NOT_FOUND.getDesc());
+            throw new IllegalArgumentException(STUDENT_PROFILE_NOT_FOUND.getDesc());
         }
     }
 
@@ -80,7 +81,7 @@ public class StudentProfileService {
         try {
             repo.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException(ErrorMessages.CANT_DELETE_STUDENT_PROFILE.getDesc());
+            throw new DataIntegrityException(CANT_DELETE_STUDENT_PROFILE.getDesc());
         }
     }
 
@@ -92,7 +93,7 @@ public class StudentProfileService {
             repo.save(student);
 
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(ErrorMessages.STUDENT_PROFILE_NOT_FOUND.getDesc());
+            throw new IllegalArgumentException(STUDENT_PROFILE_NOT_FOUND.getDesc());
         }
     }
 
